@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UV Index</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var uvQueryURL = "http://api.openweathermap.org/data/2.5/uvi?lat=51.5074lon=0.1278&appid=cb4fab0db96e7f7f6bfb9ea6a60aa6aa"
+
+        $.ajax({
+            url: uvQueryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                var uvResults = response.data;
+                console.log(response);
+                var uvIndex = response.wind.speed;
+                var p = $("<p>").text("Wind Speed: " + windSpeed + "MPH");
+                console.log(uvIndex);
+                resultsDiv.append(p);
+            });
+    </script>
+</body>
+
+</html>
+
+///http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&lat={lat}&lon={lon}&cnt={cnt}

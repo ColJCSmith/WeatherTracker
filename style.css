@@ -1,0 +1,44 @@
+header {
+    background-color: darkgrey; 
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+}
+aside {
+    width: 25%;
+    padding: 10px;
+    padding-left: 70px;
+    float: left;
+    height: 500px;
+    background-color: rgb(211, 226, 246);
+}
+
+article {
+    width:60%;
+    padding: 10px;
+    display: inline-block;
+}
+
+.searchBtn {
+    color: blue;
+    padding-bottom: 10px;
+}
+
+section {
+    width: 12%;
+    margin: 5px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    background-color: rgb(55, 111, 223);
+    float: left;
+}
+
+span {
+    font-size: 150%;
+    font-weight: bold;
+}
+
+#container {
+    padding: 10px;
+}

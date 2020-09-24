@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    </div>
+
+    <div id="forecast-here">
+    </div>
+    <aside>
+        <h3>Search for city:</h3>
+        <input id="citySearch" input type="text" placeholder="where to, gumshoe?">
+        <button id="SearchBtn" data-city="London">
+            <i class="fa fa-search"></i>
+        </button>
+        <div>Saved results go here</div>
+    </aside>
+    <div class="container">
+        <h3>Day 1 Goes Here</h3>
+        <div class="date"></div>
+        <div class="weather-icon"><img src=""></div>
+        <div class="temp">
+            <p></p>
+        </div>
+        <div class="humidity">
+            <p></p>
+        </div>
+    </div>
+    <article id="cityWeather">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $("button").on("click", function () {
+                var city = document.querySelector("input").value;
+                console.log(city);
+
+                const dateElement = document.querySelector(".date");
+                const iconElement = document.querySelector(".weather-icon");
+                const tempElement = document.querySelector(".temp p");
+                const humidityElement = document.querySelector(".humidity p");
+
+                const weather = {
+                    date: "",
+                    iconId: "",
+                    temp: "",
+                    humidity: "",
+                }
+                var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q="
+                    + city + "&appid=cb4fab0db96e7f7f6bfb9ea6a60aa6aa"
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                })
+
+                    .then(function (response) {
+                        var results = response.data;
+                        console.log(response);
+
+                        weather.date.value = response.list[1].main.dt_txt;
+                        weather.iconId.value = "http://openweathermap.org/img/w/" + iconCode + ".png"
+                        weather.temp.value = parseInt(response.list[1].main.temp);
+                        weather.humidity.value = response.list[1].main.humidity;
+                        console.log(temp);
+                    })
+
+                    .then(function () {
+                        dateElement.innerHTML = $(date.value);
+                        iconElement.innerHTML = "";
+                        tempElement.innerHTML = $(temp.value);
+                        humidityElement.innerHTML = $(humidity.value);
+                    })
+
+            });
+
+    //     .then(function() {
+    //         displayWeather();
+    //     })
+
+    // displayWeather();{
+    //     dateElement.innerHTML = $(date.value);
+    //     iconElement.innerHTML = "";
+    //     tempElement.innerHTML = $(temp.value);
+    //     humidityElement.innerHTML = $(humidity.value);
+    // }
+
+        // for (var i = 0; i < results.length; i++) {
+        //   var gifDiv = $("<div>");
+
+        //   var rating = results[i].rating;
+
+        //   var p = $("<p>").text("Rating: " + rating);
+
+        //   var personImage = $("<img>");
+        //   personImage.attr("src", results[i].images.fixed_height.url);
+
+        //   gifDiv.prepend(p);
+        //   gifDiv.prepend(personImage);
+
+        //   $("#gifs-appear-here").prepend(gifDiv);
+        // }
+
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://use.fontawesome.com/d2d6312622.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <title>Weather Forecast</title>
+</head>
+
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+</body>
+<!-- this section captures the city  -->
+<aside>
+    <h3>Search for city:</h3>
+    <input id="citySearch" input type="text" placeholder="where to, gumshoe?">
+    <button id="SearchBtn" data-city="London">
+        <i class="fa fa-search"></i>
+    </button>
+
+    <!-- this section displays the previous cities searched as buttons  -->
+    <div id="prevResults"></div>
+</aside>
+
+<!-- this section is the container for results to be displayed  -->
+<article id="cityWeather"></article>
+<div class="container" id="FiveDay">
+</div>
+
+<!-- this section creates the function to run on button click and calls the open weather API  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $("button").on("click", function () {
+        var city = document.querySelector("input").value;
+        console.log(city);
+        var city1Btn = $("<button>").text(city)
+
+        $("#prevResults").append(city1Btn)
+
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q="
+            + city + "&appid=cb4fab0db96e7f7f6bfb9ea6a60aa6aa"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                var results = response.data;
+                console.log(response);
+
+                var lat = response.city.coord.lat;
+                var long = response.city.coord.lat;
+                console.log(lat, long);
+
+                var resultsDiv = $("<div>");
+
+                var cityName = $("<span>").text(city + " ");
+                resultsDiv.append(cityName);
+                var date = moment().format("DD/MM/YYYY");
+                var p = $("<span>").text(date + " ");
+                resultsDiv.append(p);
+                var icon = ("<img src='http://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png'>");
+                var p = $("<span>").html(icon);
+                resultsDiv.append(p);
+
+                var temp = response.list[0].main.temp;
+                var p = $("<p>").text("Temperature: " + parseInt(temp - 273.15) + "°c");
+                console.log(temp);
+                resultsDiv.append(p);
+
+                var humidity = response.list[0].main.humidity;
+                var p = $("<p>").text("Humidity: " + humidity + "%");
+                console.log(humidity);
+                resultsDiv.append(p);
+
+                var windSpeed = response.list[0].wind.speed;
+                var p = $("<p>").text("Wind Speed: " + windSpeed + "MPH");
+                console.log(windSpeed);
+                resultsDiv.append(p);
+
+                $("#cityWeather").append(resultsDiv);
+
+                var p = $("<h3>").text("5 Day Forecast");
+                $("#FiveDay").append(p);
+
+                var dayOne = $("<section>");
+                var date1 = moment().add(1, 'days').format("DD/MM/YYYY");
+                var p = $("<p>").text(date1);
+                dayOne.append(p);
+
+                var icon1 = ("<img src='http://openweathermap.org/img/w/" + response.list[8].weather[0].icon + ".png'>");
+                var p = $("<p>").html(icon1);
+                dayOne.append(p);
+
+                var temp1 = parseInt(response.list[8].main.temp);
+                var p = $("<p>").text("Temp: " + parseInt(temp1 - 273.15) + "°c");
+                dayOne.append(p);
+
+                var humid1 = response.list[8].main.humidity;
+                var p = $("<p>").text("Humidity: " + humid1 + "%");
+                dayOne.append(p);
+
+                $("#FiveDay").append(dayOne);
+
+                var dayTwo = $("<section>");
+                var date2 = moment().add(2, 'days').format("DD/MM/YYYY");
+                var p = $("<p>").text(date2);
+                dayTwo.append(p);
+
+                var icon2 = ("<img src='http://openweathermap.org/img/w/" + response.list[16].weather[0].icon + ".png'>");
+                var p = $("<p>").html(icon2);
+                dayTwo.append(p);
+
+                var temp2 = parseInt(response.list[16].main.temp);
+                var p = $("<p>").text("Temp: " + parseInt(temp2 - 273.15) + "°c");
+                dayTwo.append(p);
+
+                var humid2 = response.list[16].main.humidity;
+                var p = $("<p>").text("Humidity: " + humid2 + "%");
+                dayTwo.append(p);
+
+                $("#FiveDay").append(dayTwo);
+
+                var dayThree = $("<section>");
+                var date3 = moment().add(3, 'days').format("DD/MM/YYYY");
+                var p = $("<p>").text(date3);
+                dayThree.append(p);
+
+                var icon3 = ("<img src='http://openweathermap.org/img/w/" + response.list[24].weather[0].icon + ".png'>");
+                var p = $("<p>").html(icon3);
+                dayThree.append(p);
+
+                var temp3 = parseInt(response.list[24].main.temp);
+                var p = $("<p>").text("Temp: " + parseInt(temp3 - 273.15) + "°c");
+                dayThree.append(p);
+
+                var humid3 = response.list[24].main.humidity;
+                var p = $("<p>").text("Humidity: " + humid3 + "%");
+                dayThree.append(p);
+
+                $("#FiveDay").append(dayThree);
+
+                var dayFour = $("<section>");
+                var date4 = moment().add(4, 'days').format("DD/MM/YYYY");
+                var p = $("<p>").text(date4);
+                dayFour.append(p);
+
+                var icon4 = ("<img src='http://openweathermap.org/img/w/" + response.list[32].weather[0].icon + ".png'>");
+                var p = $("<p>").html(icon4);
+                dayFour.append(p);
+
+                var temp4 = parseInt(response.list[32].main.temp);
+                var p = $("<p>").text("Temp: " + parseInt(temp4 - 273.15) + "°c");
+                dayFour.append(p);
+
+                var humid4 = response.list[32].main.humidity;
+                var p = $("<p>").text("Humidity: " + humid4 + "%");
+                dayFour.append(p);
+
+                $("#FiveDay").append(dayFour);
+
+                var dayFive = $("<section>");
+                var date5 = moment().add(5, 'days').format("DD/MM/YYYY");
+                var p = $("<p>").text(date5);
+                dayFive.append(p);
+
+                var icon5 = ("<img src='http://openweathermap.org/img/w/" + response.list[39].weather[0].icon + ".png'>");
+                var p = $("<p>").html(icon5);
+                dayFive.append(p);
+
+                var temp5 = parseInt(response.list[39].main.temp);
+                var p = $("<p>").text("Temp: " + parseInt(temp5 - 273.15) + "°c");
+                dayFive.append(p);
+
+                var humid5 = response.list[39].main.humidity;
+                var p = $("<p>").text("Humidity: " + humid5 + "%");
+                dayFive.append(p);
+
+                $("#FiveDay").append(dayFive);
+            });
+
+        var queryURLUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "lon="
+            + lon + "&appid=cb4fab0db96e7f7f6bfb9ea6a60aa6aa"
+
+        $.ajax({
+            url: queryURLUV,
+            method: "GET"
+        })
+            .then(function (response) {
+                var resultsUV = response.data;
+                console.log(response);
+
+                var UVIndex = response.list[0].wind.speed;
+                var p = $("<p>").text("UV Index: " + windSpeed);
+                console.log(windSpeed);
+                resultsDiv.append(p);
+
+                $("#cityWeather").append(resultsDiv);
+            });
+    });
+</script>
+</article>
+<script src="script.js"></script>
+
+</html>
